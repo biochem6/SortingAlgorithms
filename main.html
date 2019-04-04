@@ -1,0 +1,63 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="css/main.css">
+    <script src="js/main.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <main>
+        <div class="main">
+            <div id="canvas_div" class="canvas">
+                <canvas width="800px" height="500px" id="main_canvas"></canvas>
+            </div>
+            <form action="./js/main.js">
+                <label for="size">Size: </label>
+                <input type="text" id="size" name="size"><br>
+                <label for="delay">Delay: </label> 
+                <input type="text" id="delay" name="delay"><br>
+                <label for="algo">Algorithm: </label>
+                <input type="radio" name="algo" id="selection" value="selection_sort">Selection Sort<br>
+                <input type="radio" name="algo" id="bubble" value="bubble_sort">Bubble Sort<br>
+                <input type="radio" name="algo" id="insertion" value="insertion_sort">Insertion Sort<br>                
+                <input type="button" id="start_btn" value="Start" width="75px" height="55px">           
+            </form>
+        </div>
+    </main>
+    <script>
+        window.onload = (function() {
+            var aa = null;
+            
+            var start_btn = document.getElementById("start_btn");
+            start_btn.onclick = () => {
+                if(aa !== null) aa.cancel();
+
+                var n = parseInt(document.getElementById("size").value);
+                var interval = parseInt(document.getElementById("delay").value);
+                var algo = "selectionsort";
+                
+                if (document.getElementById("selection").checked) {
+                    algo = "selectionsort";
+                } else if (document.getElementById("bubble").checked) {
+                    algo = 'bubblesort';
+                } else if (document.getElementById("insertion").checked) {
+                    algo = "insertionsort";
+                }
+             
+                var sort_fn = sorting.get_sort_algo(algo);
+
+                var arr = [];
+                for (var i = 0; i < n; i++) {
+                   arr.push(Math.random());
+                }
+                
+                var canvas = document.getElementById("main_canvas");
+                aa = new sorting.SortArray(arr, canvas, interval);
+                sort_fn(aa);
+            }           
+        })();
+    </script>
+</body>
+</html>
